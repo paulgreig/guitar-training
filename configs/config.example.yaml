@@ -1,0 +1,21 @@
+# Guitar Training Application Configuration
+# Copy this file to config.yaml and update with your values
+
+server:
+  port: "8080"
+  host: "localhost"
+
+database:
+  type: "sqlite"  # or "postgres"
+  dsn: "guitar_training.db"
+  
+  # PostgreSQL settings (if type is postgres)
+  host: "localhost"
+  port: "5432"
+  user: ""
+  password: ""
+  dbname: "guitar_training"
+
+logging:
+  level: "info"  # debug, info, warn, error
+  format: "json"  # json or text
