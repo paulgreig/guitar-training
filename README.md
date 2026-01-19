@@ -1,42 +1,25 @@
 # Guitar Training Application
 
-A comprehensive guitar training application built with Go to help users learn and practice guitar through interactive exercises, lessons, and progress tracking.
+A text-based user interface (TUI) guitar training application built with Go to help users learn and practice guitar scales and lessons through an interactive terminal interface.
 
 ## Features
 
-- **Chord Practice**: Display chord diagrams, practice chord transitions
-- **Scale Practice**: Learn and practice scales with visual fretboard display
-- **Rhythm Training**: Metronome with various time signatures
-- **Practice Tracking**: Log practice sessions and track progress
-- **Interactive Lessons**: Structured lessons for different skill levels
-- **Progress Analytics**: View practice metrics and improvement over time
+- **Scale Browser**: Browse and view guitar scales with text-based fretboard visualization
+- **Lesson System**: Access structured lessons organized by skill level (beginner, intermediate, advanced)
+- **Interactive Navigation**: Navigate through scales and lessons using keyboard controls
+- **Clean TUI**: Beautiful terminal interface built with Bubble Tea
 
-## Project Structure
+## Screenshots
 
-```
-guitar-training/
-├── cmd/server/          # Application entry point
-├── internal/            # Private application code
-│   ├── api/            # HTTP handlers and routes
-│   ├── models/         # Data models
-│   ├── repository/     # Data access layer
-│   ├── service/        # Business logic
-│   ├── utils/          # Utility functions
-│   └── config/         # Configuration management
-├── pkg/                # Public packages
-├── migrations/         # Database migrations
-├── data/               # Data files (chords, scales, etc.)
-└── configs/            # Configuration files
-```
+*Screenshots will be added as the UI is developed*
 
-## Getting Started
+## Installation
 
 ### Prerequisites
 
 - Go 1.21 or higher
-- SQLite (for development) or PostgreSQL (for production)
 
-### Installation
+### Build from Source
 
 1. Clone the repository:
 ```bash
@@ -49,70 +32,116 @@ cd guitar-training
 go mod download
 ```
 
-3. Set up configuration:
+3. Build the application:
 ```bash
-cp configs/config.example.yaml configs/config.yaml
-# Edit config.yaml with your settings
+go build -o guitar-training cmd/server/main.go
 ```
 
-4. Run migrations (when available):
+4. Run the application:
 ```bash
-# TBD: Migration commands
+./guitar-training
 ```
 
-5. Run the server:
+Or run directly:
 ```bash
 go run cmd/server/main.go
 ```
+
+## Usage
+
+### Starting the Application
+
+Simply run the binary or use `go run`:
+
+```bash
+go run cmd/server/main.go
+```
+
+### Navigation
+
+- **Arrow Keys** or **j/k**: Navigate up and down
+- **Enter**: Select an item or view details
+- **Esc**: Go back to the previous screen
+- **q** or **Ctrl+C**: Quit the application
+
+### Main Menu
+
+1. **View Scales**: Browse available guitar scales
+2. **View Lessons**: Browse available lessons
+3. **Quit**: Exit the application
+
+### Viewing Scales
+
+- Select a scale from the list to view its details
+- See the scale notes and fretboard positions
+- Text-based fretboard shows where to play the scale
+
+### Viewing Lessons
+
+- Browse lessons organized by level
+- Select a lesson to read its full content
+- Lessons include practice tips and techniques
+
+## Project Structure
+
+```
+guitar-training/
+├── cmd/server/          # Application entry point
+├── internal/
+│   ├── tui/             # TUI components (Bubble Tea)
+│   ├── models/          # Data models
+│   └── config/          # Configuration
+├── data/                # JSON data files
+│   ├── scales.json
+│   └── lessons.json
+└── README.md
+```
+
+## Data Files
+
+The application reads from JSON files in the `data/` directory:
+
+- `data/scales.json`: Scale definitions with notes and positions
+- `data/lessons.json`: Lesson content organized by level
+
+You can edit these files to add your own scales and lessons.
 
 ## Development
 
 ### Running Tests
 
 ```bash
-# Run all tests
 go test ./...
-
-# Run tests with coverage
-go test -cover ./...
-
-# Run integration tests
-go test ./tests/integration/...
 ```
 
-### Building
+### Building for Different Platforms
 
 ```bash
-# Build binary
-go build -o bin/guitar-training cmd/server/main.go
-
-# Build for different platforms
+# Linux
 GOOS=linux GOARCH=amd64 go build -o bin/guitar-training-linux cmd/server/main.go
+
+# Windows
 GOOS=windows GOARCH=amd64 go build -o bin/guitar-training-windows.exe cmd/server/main.go
+
+# macOS
 GOOS=darwin GOARCH=amd64 go build -o bin/guitar-training-macos cmd/server/main.go
 ```
 
-## API Endpoints
-
-API documentation will be available once the server is running. Check the `/docs` endpoint for Swagger/OpenAPI documentation.
-
 ## Technology Stack
 
-- **Backend**: Go 1.21+
-- **Web Framework**: Gin/Echo/Chi
-- **Database**: SQLite (dev) / PostgreSQL (prod)
-- **ORM**: GORM or sqlx
-- **Config**: Viper
-- **Logging**: Zap or Logrus
+- **Go 1.21+**: Programming language
+- **Bubble Tea**: TUI framework (github.com/charmbracelet/bubbletea)
+- **Lipgloss**: Styling library (github.com/charmbracelet/lipgloss)
+- **JSON**: Data storage format
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-TBD
-
 ## Roadmap
 
 See [PLAN.md](PLAN.md) for detailed development phases and roadmap.
+
+## License
+
+TBD

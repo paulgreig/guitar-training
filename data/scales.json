@@ -1,0 +1,48 @@
+[
+  {
+    "name": "C Major",
+    "notes": ["C", "D", "E", "F", "G", "A", "B"],
+    "positions": [
+      {
+        "fret": 0,
+        "strings": [0, 1, 2, 3, 4, 5]
+      },
+      {
+        "fret": 3,
+        "strings": [0, 1, 2, 3, 4]
+      },
+      {
+        "fret": 5,
+        "strings": [0, 1, 2, 3, 4, 5]
+      }
+    ]
+  },
+  {
+    "name": "A Minor",
+    "notes": ["A", "B", "C", "D", "E", "F", "G"],
+    "positions": [
+      {
+        "fret": 0,
+        "strings": [0, 1, 2, 3, 4, 5]
+      },
+      {
+        "fret": 5,
+        "strings": [0, 1, 2, 3, 4, 5]
+      }
+    ]
+  },
+  {
+    "name": "G Major",
+    "notes": ["G", "A", "B", "C", "D", "E", "F#"],
+    "positions": [
+      {
+        "fret": 0,
+        "strings": [0, 1, 2, 3, 4, 5]
+      },
+      {
+        "fret": 3,
+        "strings": [0, 1, 2, 3, 4, 5]
+      }
+    ]
+  }
+]

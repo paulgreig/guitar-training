@@ -1,0 +1,20 @@
+[
+  {
+    "id": "lesson-001",
+    "title": "Introduction to Guitar Scales",
+    "level": "beginner",
+    "content": "Scales are the foundation of music theory and guitar playing. They are sequences of notes played in ascending or descending order. The most common scales for beginners are:\n\n1. Major Scale - Has a happy, bright sound\n2. Minor Scale - Has a sad, melancholic sound\n\nPractice playing scales slowly and focus on clean notes. Use alternate picking (down-up-down-up) for better technique."
+  },
+  {
+    "id": "lesson-002",
+    "title": "C Major Scale Practice",
+    "level": "beginner",
+    "content": "The C Major scale is one of the first scales every guitarist should learn. It contains no sharps or flats.\n\nNotes: C, D, E, F, G, A, B, C\n\nPractice tips:\n- Start on the 3rd fret of the A string (C note)\n- Play each note clearly\n- Use your index, middle, and ring fingers\n- Practice ascending and descending\n\nTry to play it smoothly without stopping between notes."
+  },
+  {
+    "id": "lesson-003",
+    "title": "Understanding Scale Positions",
+    "level": "intermediate",
+    "content": "Scale positions allow you to play the same scale in different locations on the fretboard. This is essential for:\n\n- Playing solos across the entire neck\n- Understanding the fretboard layout\n- Creating melodic variations\n\nEach position uses a different set of frets and strings. Practice moving between positions smoothly."
+  }
+]

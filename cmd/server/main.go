@@ -2,29 +2,17 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
+	"os"
 
-	"github.com/paulgreig/guitar-training/internal/api"
-	"github.com/paulgreig/guitar-training/internal/config"
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/paulgreig/guitar-training/internal/tui"
 )
 
 func main() {
-	// Load configuration
-	cfg, err := config.Load()
-	if err != nil {
-		log.Fatalf("Failed to load configuration: %v", err)
-	}
-
-	// Initialize router
-	router := api.SetupRouter()
-
-	// Start server
-	serverAddr := fmt.Sprintf(":%s", cfg.Server.Port)
-	log.Printf("Starting server on %s", serverAddr)
-	log.Printf("API endpoints available at http://localhost%s/api", serverAddr)
-
-	if err := http.ListenAndServe(serverAddr, router); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+	// Initialize the TUI application
+	p := tea.NewProgram(tui.NewModel(), tea.WithAltScreen())
+	if _, err := p.Run(); err != nil {
+		fmt.Printf("Error running application: %v\n", err)
+		os.Exit(1)
 	}
 }

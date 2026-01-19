@@ -50,3 +50,4 @@ logs/
 dist/
 build/
 bin/
+server
