@@ -2,9 +2,11 @@ package tui
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/paulgreig/guitar-training/internal/obs"
 )
 
 type Model struct {
@@ -63,8 +65,13 @@ func (m Model) Init() tea.Cmd {
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
+		obs.RecordKeyPress()
 		switch msg.String() {
 		case "ctrl+c", "q":
+			obs.Event("quit_requested", map[string]interface{}{
+				"view":   m.view,
+				"cursor": m.cursor,
+			})
 			return m, tea.Quit
 		case "up", "k":
 			if m.cursor > 0 {
@@ -93,25 +100,46 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) handleEnter() (Model, tea.Cmd) {
+	start := time.Now()
 	switch m.view {
 	case "menu":
 		switch m.cursor {
 		case 0:
+			obs.RecordScalesListView()
+			obs.RecordMenuSelectionDuration("scales_list", time.Since(start))
+			obs.Event("navigate_to_scales", map[string]interface{}{})
 			m.view = "scales"
 			m.cursor = 0
 		case 1:
+			obs.RecordLessonsListView()
+			obs.RecordMenuSelectionDuration("lessons_list", time.Since(start))
+			obs.Event("navigate_to_lessons", map[string]interface{}{})
 			m.view = "lessons"
 			m.cursor = 0
 		case 2:
+			obs.Event("menu_quit_selected", map[string]interface{}{})
 			return m, tea.Quit
 		}
 	case "scales":
 		if len(m.scales) > 0 && m.cursor < len(m.scales) {
+			obs.RecordScaleDetailView()
+			obs.RecordMenuSelectionDuration("scale_detail", time.Since(start))
+			obs.Event("scale_detail_view", map[string]interface{}{
+				"index": m.cursor,
+				"name":  m.scales[m.cursor].Name,
+			})
 			m.view = "scale-detail"
 			m.selectedIndex = m.cursor
 		}
 	case "lessons":
 		if len(m.lessons) > 0 && m.cursor < len(m.lessons) {
+			obs.RecordLessonDetailView()
+			obs.RecordMenuSelectionDuration("lesson_detail", time.Since(start))
+			obs.Event("lesson_detail_view", map[string]interface{}{
+				"index": m.cursor,
+				"title": m.lessons[m.cursor].Title,
+				"level": m.lessons[m.cursor].Level,
+			})
 			m.view = "lesson-detail"
 			m.selectedIndex = m.cursor
 		}

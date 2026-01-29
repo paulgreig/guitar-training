@@ -127,11 +127,24 @@ GOOS=windows GOARCH=amd64 go build -o bin/guitar-training-windows.exe cmd/server
 GOOS=darwin GOARCH=amd64 go build -o bin/guitar-training-macos cmd/server/main.go
 ```
 
+## Observability and performance monitoring
+
+The app includes logging and Prometheus metrics for observability and performance:
+
+- **Logging**: Configurable level via `LOG_LEVEL` (debug, info, warn, error). Logs are written to `logs/app.log`.
+- **Prometheus metrics**: An HTTP server (default port **9090**) serves `/metrics` with:
+  - **Menu selection performance**: Histogram `guitar_training_menu_selection_duration_seconds` for latency of scales (and other) menu actions.
+  - **View counts**: Counters for scales/lessons list and detail views.
+  - **Go runtime**: CPU, memory, and GC metrics from the Prometheus Go and process collectors.
+
+Set `METRICS_PORT=0` to disable the metrics server. See [docs/METRICS.md](docs/METRICS.md) for Prometheus scrape config and Grafana Cloud setup.
+
 ## Technology Stack
 
 - **Go 1.21+**: Programming language
 - **Bubble Tea**: TUI framework (github.com/charmbracelet/bubbletea)
 - **Lipgloss**: Styling library (github.com/charmbracelet/lipgloss)
+- **Prometheus**: Metrics (client_golang) for performance and runtime monitoring
 - **JSON**: Data storage format
 
 ## Contributing
