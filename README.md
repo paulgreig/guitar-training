@@ -9,6 +9,25 @@ A text-based user interface (TUI) guitar training application built with Go to h
 - **Interactive Navigation**: Navigate through scales and lessons using keyboard controls
 - **Clean TUI**: Beautiful terminal interface built with Bubble Tea
 
+## Application flow
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Init[Load scales & lessons]
+    Init --> Menu[Main Menu]
+    Menu --> |View Scales| ScalesList[Scales List]
+    Menu --> |View Lessons| LessonsList[Lessons List]
+    Menu --> |Quit| Quit([Quit])
+    ScalesList --> |Enter on scale| ScaleDetail[Scale Detail]
+    ScalesList --> |Esc| Menu
+    ScaleDetail --> |Esc| ScalesList
+    LessonsList --> |Enter on lesson| LessonDetail[Lesson Detail]
+    LessonsList --> |Esc| Menu
+    LessonDetail --> |Esc| LessonsList
+    ScalesList --> |↑/↓ or j/k| ScalesList
+    LessonsList --> |↑/↓ or j/k| LessonsList
+```
+
 ## Screenshots
 
 *Screenshots will be added as the UI is developed*
