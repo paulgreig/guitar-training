@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/paulgreig/guitar-training/internal/obs"
 )
 
 type Scale struct {
@@ -39,9 +40,13 @@ func loadScales() tea.Cmd {
 	return func() tea.Msg {
 		scales, err := loadScalesFromFile()
 		if err != nil {
-			// Return empty scales if file doesn't exist yet
+			// Observability: log the error and record metrics, but keep the app usable.
+			obs.Error("failed to load scales: %v", err)
+			obs.RecordDataLoadError()
 			return ScalesLoadedMsg{Scales: []Scale{}}
 		}
+		obs.Info("loaded scales successfully count=%d", len(scales))
+		obs.RecordDataLoadSuccess()
 		return ScalesLoadedMsg{Scales: scales}
 	}
 }
@@ -50,9 +55,13 @@ func loadLessons() tea.Cmd {
 	return func() tea.Msg {
 		lessons, err := loadLessonsFromFile()
 		if err != nil {
-			// Return empty lessons if file doesn't exist yet
+			// Observability: log the error and record metrics, but keep the app usable.
+			obs.Error("failed to load lessons: %v", err)
+			obs.RecordDataLoadError()
 			return LessonsLoadedMsg{Lessons: []Lesson{}}
 		}
+		obs.Info("loaded lessons successfully count=%d", len(lessons))
+		obs.RecordDataLoadSuccess()
 		return LessonsLoadedMsg{Lessons: lessons}
 	}
 }

@@ -9,6 +9,25 @@ A text-based user interface (TUI) guitar training application built with Go to h
 - **Interactive Navigation**: Navigate through scales and lessons using keyboard controls
 - **Clean TUI**: Beautiful terminal interface built with Bubble Tea
 
+## Application flow
+
+```mermaid
+flowchart TD
+    Start([Start]) --> Init[Load scales & lessons]
+    Init --> Menu[Main Menu]
+    Menu --> |View Scales| ScalesList[Scales List]
+    Menu --> |View Lessons| LessonsList[Lessons List]
+    Menu --> |Quit| Quit([Quit])
+    ScalesList --> |Enter on scale| ScaleDetail[Scale Detail]
+    ScalesList --> |Esc| Menu
+    ScaleDetail --> |Esc| ScalesList
+    LessonsList --> |Enter on lesson| LessonDetail[Lesson Detail]
+    LessonsList --> |Esc| Menu
+    LessonDetail --> |Esc| LessonsList
+    ScalesList --> |↑/↓ or j/k| ScalesList
+    LessonsList --> |↑/↓ or j/k| LessonsList
+```
+
 ## Screenshots
 
 *Screenshots will be added as the UI is developed*
@@ -127,11 +146,24 @@ GOOS=windows GOARCH=amd64 go build -o bin/guitar-training-windows.exe cmd/server
 GOOS=darwin GOARCH=amd64 go build -o bin/guitar-training-macos cmd/server/main.go
 ```
 
+## Observability and performance monitoring
+
+The app includes logging and Prometheus metrics for observability and performance:
+
+- **Logging**: Configurable level via `LOG_LEVEL` (debug, info, warn, error). Logs are written to `logs/app.log`.
+- **Prometheus metrics**: An HTTP server (default port **9090**) serves `/metrics` with:
+  - **Menu selection performance**: Histogram `guitar_training_menu_selection_duration_seconds` for latency of scales (and other) menu actions.
+  - **View counts**: Counters for scales/lessons list and detail views.
+  - **Go runtime**: CPU, memory, and GC metrics from the Prometheus Go and process collectors.
+
+Set `METRICS_PORT=0` to disable the metrics server. See [docs/METRICS.md](docs/METRICS.md) for Prometheus scrape config and Grafana Cloud setup.
+
 ## Technology Stack
 
 - **Go 1.21+**: Programming language
 - **Bubble Tea**: TUI framework (github.com/charmbracelet/bubbletea)
 - **Lipgloss**: Styling library (github.com/charmbracelet/lipgloss)
+- **Prometheus**: Metrics (client_golang) for performance and runtime monitoring
 - **JSON**: Data storage format
 
 ## Contributing
